@@ -2,7 +2,7 @@
 
 This repository contains an R script that creates a CSV crosswalk between
 
-Continuums of Care (CoCs) and U.S. Census Tracts.
+Continuums of Care (CoCs) and U.S. Census Tracts. This code employees the most up to date boundaries available during its development; 2024 CoC boundaries and 2023 Census boundaries.  
 
 The final output uniquely assigns each Census Tract to a single CoC. In cases where a Census Tract spans multiple CoCs, the tract is assigned to the CoC that contains the largest share of the tract’s land area.
 
@@ -29,7 +29,7 @@ This approach reduces processing time compared to matching all CoCs directly to 
 
 The script expects the following spatial inputs:
 
-- CoC boundary shapefile (included in this repository) 
+- 2024 CoC boundary Esri File Geodatabase (included in this repository, available through HUD Exchange > CoC GIS Tools) 
 - Unique Census API KEY
 - Census Tract boundary shapefile 
 - County boundary shapefile
