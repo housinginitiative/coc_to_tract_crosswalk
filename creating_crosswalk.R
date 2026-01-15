@@ -231,15 +231,16 @@ coc_tract_intersections <- coc_boundaries %>% filter(COCNUM %in% as.list(missing
 # Calculates intersections 
 
 tract_intersections <- st_intersection(tracts2023, coc_tract_intersections) %>% 
-  mutate(geometry = st_make_valid(geometry)) %>%
-  mutate(intersection_area = st_area(tract_intersections ) %>%  
+  mutate(geometry = st_make_valid(geometry)) 
+
+tract_areas <-  tract_intersections %>% mutate(intersection_area = st_area(tract_intersections ) %>%  
            set_units(mi^2)) %>%
   mutate(percent_area = (as.numeric(intersection_area)/as.numeric(tract_area)))
 
 # Tracts whose area is at least 55% contained within a CoC are assigned to those CoCs, 
 # tracts who have less intersection by area are treated as invalid matches. 
 
-qualified_tracts <- tract_intersections %>%
+qualified_tracts <- tract_areas %>%
   filter(percent_area > 0.55) %>% 
   st_drop_geometry() %>%
   select(COCNUM, GEOID)
@@ -249,4 +250,4 @@ qualified_tracts <- tract_intersections %>%
 
 rbind_geoid <- rbind(qualified_tracts, tracts_matched_county_level) 
 
-write.csv(rbind_geoid , "tract_to_coc_crosswalk.csv")
+# write.csv(rbind_geoid , "tract_to_coc_crosswalk.csv")
